@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-module App # rubocop:todo Style/Documentation
+module App
   require 'dry/cli'
   require 'bitcoin'
   require 'json'
   Bitcoin.network = :testnet3
-  $key_path = 'base58key.txt' # rubocop:todo Style/GlobalVars
+  $key_path = 'base58key.txt'
 
   # Catched custom error
   class AppError < StandardError
