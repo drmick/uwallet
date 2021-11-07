@@ -12,7 +12,7 @@ docker-compose run cli generate
 # Посмотреть баланс
 docker-compose run cli balance
 
-# Посмотреть посмотреть текущий адрес
+# Посмотреть текущий адрес
 docker-compose run cli addr
 
 # Отправить перевод
@@ -45,7 +45,7 @@ ruby cli.rb generate
 # Посмотреть баланс
 ruby cli.rb balance
 
-# Посмотреть посмотреть текущий адрес
+# Посмотреть текущий адрес
 ruby cli.rb addr
 
 # Отправить перевод
