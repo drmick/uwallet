@@ -49,7 +49,14 @@ module App
     end
 
     def get_binary_transaction(tx_hash)
-      URI.parse("#{@base_url}/tx/#{tx_hash}/raw").open(&:read)
+      uri = URI.parse("#{@base_url}/tx/#{tx_hash}/raw")
+      res = Net::HTTP.get URI(uri)
+      if res == 'Transaction not found'
+        raise AppError,
+              "Transaction not found in #{@base_url}. Perhaps the requests are being made too quickly and the data has not yet reached the API server. URI=#{uri}"
+      end
+
+      res
     end
 
     def post_transaction(raw)
@@ -107,7 +114,10 @@ module App
 
     # Calculate FEE by bytes length. 1 Satoshi == 1 byte
     def get_fee_by_bytes(bytes_amount)
-      bytes_amount + 1
+      # sometimes the API rejects the transaction due to the fact that the bytes in the transaction
+      # are considered differently there (sometimes there is not enough 1 satoshi in the commission)
+      correction = 5
+      bytes_amount + correction
     end
 
     # Create transaction
@@ -172,7 +182,6 @@ module App
       class GetAddress < Dry::CLI::Command
         desc 'Print key address'
         def call(*)
-          api = ExternalAPI.new
           key = Utils.load_key($key_path)
           puts key.addr
         end
@@ -187,6 +196,7 @@ module App
         def call(address: nil, value: nil, **)
           api = ExternalAPI.new
           key = Utils.load_key($key_path)
+          value = Utils.btc_to_satoshi(value)
           WalletService.new.send_money(api, key, value.to_f, address)
         end
       end
@@ -203,7 +213,4 @@ begin
   Dry::CLI.new(App::CLI::Commands).call
 rescue App::AppError => e
   puts "Error: #{e.message}"
-rescue StandardError
-  puts 'Unexpected error'
-  puts e
 end

@@ -17,7 +17,7 @@ docker-compose run cli addr
 
 # Отправить перевод
 docker-compose run cli send ADDRESS VALUE
-# Пример docker-compose run cli send mfXYf6sLQZXUrJrXWhVrywB8SQJB84k1Et 0.00000123
+# Пример docker-compose run cli send tb1qldpy0a97npgh2vayq8pzeyvt5c9sv8zryz253g 0.00001
 
 # Список команд 
 docker-compose run cli help
@@ -27,8 +27,8 @@ docker-compose run cli help
 При удачном переводе должно прийти сообщение вида:
 ```
 Success!
-Transaction ID: a8a1c11dd7f5f3bb179628a8093e5e0cf859a88edfe4884710f7b5330aa02abe
-Sent amount: 0.00000000 tBTC
+Transaction ID: 6e96f808ab35630063fb039e00d508c669d71e18d1b2594c5006850ac23d1b34
+Sent amount: 0.00001000 tBTC
 Cashback: 0.00103231 tBTC
 Fee: 0.00000374 tBTC
 ```
@@ -50,10 +50,13 @@ ruby cli.rb addr
 
 # Отправить перевод
 ruby cli.rb send ADDRESS VALUE
-# Пример ruby cli.rb send mfXYf6sLQZXUrJrXWhVrywB8SQJB84k1Et 0.00000123
+# Пример ruby cli.rb send tb1qldpy0a97npgh2vayq8pzeyvt5c9sv8zryz253g 0.00001
 
 # Список команд
 ruby cli.rb help
 ```
 
 Проверял на Ubuntu 20.04.3 LTS
+
+Если слишком быстро отправлять переводы, то API иногда может присылать сообщения, что данных по транзакциям нет (или другие ошибки). Скорее данные туда не успевают попадать
+Иногда случается, что на одни и те же запросы приходят 404, 200, 404 поочередно
