@@ -1,6 +1,6 @@
 version: '3'
 services:
-  cli:
+  uwallet:
     build: .
     working_dir: /usr/app/
     volumes:

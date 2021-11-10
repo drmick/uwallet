@@ -1,5 +1,6 @@
 FROM ruby:2.7.0
-COPY cli.rb .
+COPY lib .
+COPY bin .
 COPY Gemfile .
 RUN bundle install
-ENTRYPOINT ["ruby", "cli.rb"]
+ENTRYPOINT ["ruby", "bin/uwallet.rb"]
